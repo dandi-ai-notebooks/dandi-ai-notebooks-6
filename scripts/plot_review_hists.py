@@ -24,7 +24,7 @@ ordered_ids = [q["id"] for q in question_data["questions"]]
 valid_ordered_cols = [col for col in ordered_ids if col in df.columns and pd.api.types.is_numeric_dtype(df[col])]
 
 # Plot histograms in the hard-coded order
-fig, axes = plt.subplots(nrows=5, ncols=4, figsize=(20, 15))
+fig, axes = plt.subplots(nrows=3, ncols=6, figsize=(24, 12))
 axes = axes.flatten()
 
 for idx, col in enumerate(valid_ordered_cols):
@@ -44,9 +44,13 @@ for idx, col in enumerate(valid_ordered_cols):
         bins = standard_bins["negative"]
         ticks = [-2, -1, 0]
 
-    ax.hist(data, bins=bins, align='mid', rwidth=0.6)
-    ax.set_title(col, fontsize=10)
+    # Use gray color for the last 5 histograms
+    color = 'gray' if idx >= len(valid_ordered_cols) - 5 else 'tab:blue'
+    
+    ax.hist(data, bins=bins, align='mid', rwidth=0.6, color=color)
+    ax.set_title(col, fontsize=14)
     ax.set_xticks(ticks)
+    ax.tick_params(axis='both', labelsize=12)
     ax.set_xlim(bins[0], bins[-1])
     ax.grid(True, axis='y', linestyle='--', alpha=0.7)
 

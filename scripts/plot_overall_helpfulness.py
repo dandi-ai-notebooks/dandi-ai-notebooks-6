@@ -14,12 +14,16 @@ breakdown.set_index("dandiset_id", inplace=True)
 
 # Plot
 fig, ax = plt.subplots(figsize=(10, 6))
-breakdown.plot(kind="bar", stacked=True, color=['green', 'yellow', 'red'], ax=ax)
-ax.set_title("Breakdown of 'Overall Helpfulness' by Dandiset ID")
+# Use consistent color scheme: Very helpful (2), Moderately helpful (1), Not helpful (0)
+colors = ['#2E8B57', '#9370DB', '#555555']
+breakdown.plot(kind="bar", stacked=True, color=colors, ax=ax)
+ax.set_title("Overall Helpfulness by Dandiset ID")
 ax.set_xlabel("Dandiset ID")
 ax.set_ylabel("Number of Responses")
 ax.set_xticklabels(breakdown.index, rotation=45)
-ax.legend(title="Helpfulness Score", labels=["Very helpful (2)", "Moderately helpful (1)", "Not helpful (0)"])
+# Set legend with reversed order to match other plots
+handles, labels = ax.get_legend_handles_labels()
+ax.legend(handles[::-1], ["Not helpful (0)", "Moderately helpful (1)", "Very helpful (2)"], title="Helpfulness Score")
 ax.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
 
 plt.tight_layout()

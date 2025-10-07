@@ -39,8 +39,9 @@ ax.set_ylabel("Number of Responses")
 expertise_labels = {0: "No expertise (0)", 1: "Some expertise (1)", 2: "High expertise (2)"}
 ax.set_xticklabels([expertise_labels.get(int(x), str(int(x))) for x in breakdown.index], rotation=0)
 
-# Set legend
-ax.legend(title="Overall Helpfulness", labels=["Very helpful (2)", "Moderately helpful (1)", "Not helpful (0)"])
+# Set legend with reversed order
+handles, labels = ax.get_legend_handles_labels()
+ax.legend(handles[::-1], ["Not helpful (0)", "Moderately helpful (1)", "Very helpful (2)"], title="Overall Helpfulness")
 
 # Ensure y-axis shows only integer values
 ax.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
