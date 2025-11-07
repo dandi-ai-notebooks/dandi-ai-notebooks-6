@@ -6,7 +6,8 @@ def create_montage_packed(all_image_paths,
                           max_width=2000,
                           padding=10,
                           target_row_height=250,
-                          bg_color="white"):
+                          bg_color="white",
+                          scale_factor=4):
     """
     Build a densely-packed montage (Pinterest / justified-gallery style).
 
@@ -18,12 +19,18 @@ def create_montage_packed(all_image_paths,
     padding          : int        – gap between thumbs and around the border
     target_row_height: int        – desired average thumb height before scaling
     bg_color         : str/tuple  – PIL color for background
+    scale_factor     : int/float  – resolution scaling factor (default: 2)
 
     The algorithm fills each row so it spans the full width, then
-    scales the row’s height accordingly; it keeps aspect ratio for every
+    scales the row's height accordingly; it keeps aspect ratio for every
     thumbnail, yielding minimal wasted space.  The last row is left-aligned
-    at the target height (so it isn’t stretched unnaturally).
+    at the target height (so it isn't stretched unnaturally).
     """
+    # Apply scale factor to dimensions
+    max_width = int(max_width * scale_factor)
+    padding = int(padding * scale_factor)
+    target_row_height = int(target_row_height * scale_factor)
+    
     if not all_image_paths:
         raise ValueError("No images given")
 
